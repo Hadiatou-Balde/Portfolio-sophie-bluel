@@ -1,4 +1,4 @@
-async function getWorks() {
+async function getWorks(filter = "all") {
   const url = "http://localhost:5678/api/works";
   try {
     const response = await fetch(url);
@@ -7,9 +7,21 @@ async function getWorks() {
       throw new Error(`Response status : ${response.status}`);
     }
     const json = await response.json();
-    // on continue le traitement des données
-    for (let i = 0; i < json.length; i++) {
-      Figures(json[i]);
+
+    //Filtrage des données selon le filtre selectionné
+    const filterWorks =
+      filter === "all"
+        ? json
+        : json.filter((data) => data.categoryId === filter);
+    // vide la gallery avant d'ajouter de nouvel élément
+    const gallery = document.querySelector(".gallery");
+    // console.log(gallery);
+    if (gallery) {
+      gallery.innerHTML = "";
+
+      filterWorks.forEach((work) => Figures(work));
+    } else {
+      console.error("la gallerie est introuvable");
     }
   } catch (erreur) {
     console.error(erreur.message);
@@ -32,19 +44,27 @@ async function getCategories() {
     if (!response.ok) {
       throw new Error(`Response status : ${response.status}`);
     }
-    const json = await response.json();
-    console.log(json);
-    for (let i = 0; i < json.length; i++) {
-      setFilter(json[i]);
-    }
+
+    const categories = await response.json();
+    setFilter({ id: "all", name: "Tous" });
+    categories.forEach((category) => setFilter(category));
   } catch (erreur) {
-    console.error(erreur.message);
+    console.error(
+      "Erreur lors de la récupération des catégories :",
+      erreur.message
+    );
   }
 }
 getCategories();
 
-function setFilter(data) {
+function setFilter(category) {
   const div = document.createElement("div");
-  div.innerHTML = `${data.name}`;
+  div.innerHTML = `${category.name}`;
+
+  div.addEventListener("click", () => {
+    getWorks(category.id === "all" ? "all" : category.id);
+  });
+
   document.querySelector(".div-container")?.append(div);
 }
+// document.querySelector(".all")?.addEventListener("click", () => getWorks());

@@ -60,7 +60,7 @@ getCategories();
 function setFilter(category) {
   const div = document.createElement("div");
   div.innerHTML = `${category.name}`;
-
+  div.className = category.id;
   div.addEventListener("click", () => {
     getWorks(category.id === "all" ? "all" : category.id);
   });

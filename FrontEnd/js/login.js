@@ -22,7 +22,7 @@ async function handlesubmit() {
     email: emailEl.value.trim(),
     password: passwordEl.value.trim(),
   };
-  console.log("données envoyées", user);
+  // console.log("données envoyées", user);
 
   try {
     const response = await fetch(loginApi, {
@@ -34,13 +34,13 @@ async function handlesubmit() {
     });
 
     const result = await response.json();
-
+    const token = result.token;
     if (response.ok) {
-      console.log("Connexion réussie :", result);
+      // console.log("Connexion réussie :", result);
       alert("connexion réussie");
 
-      if (result.token) {
-        localStorage.setItem("token", result.token);
+      if (token) {
+        sessionStorage.setItem("authToken", token);
         window.location.href = "index.html";
       } else {
         console.log("Connexion réussie, mais aucun token reçu");

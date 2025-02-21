@@ -327,6 +327,30 @@ input[type="submit"] {
   color: white;
   height: 50px;
 }
+h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+.modifier {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "Syne";
+  font-size: 0.5em;
+  /* background: none;
+  color: none;
+  border: none; */
+}
+.modifier i {
+  vertical-align: middle;
+  /* font-size: 0.5em; */
+}
+button {
+  border: none;
+  background: none;
+}
 footer {
   background: white;
   height: 50px;

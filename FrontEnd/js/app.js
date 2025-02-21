@@ -60,8 +60,19 @@ getCategories();
 function setFilter(category) {
   const div = document.createElement("div");
   div.innerHTML = `${category.name}`;
-  div.className = category.id;
+  div.dataset.id = category.id;
+  div.className = "filter-category";
+
   div.addEventListener("click", () => {
+    document.querySelectorAll(".filter-category").forEach((el) => {
+      el.classList.remove("selected");
+      el.style.backgroundColor = "";
+      el.style.color = ""; // Réinitialiser le fond
+    });
+
+    div.classList.add("selected");
+    div.style.backgroundColor = "#1d6154";
+    div.style.color = "white";
     getWorks(category.id === "all" ? "all" : category.id);
   });
 

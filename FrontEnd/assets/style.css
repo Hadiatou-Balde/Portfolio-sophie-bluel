@@ -319,7 +319,7 @@ input[type="submit"] {
   margin-bottom: 40px;
 }
 
-.edit {
+.edit-banner {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -332,6 +332,19 @@ h2 {
   justify-content: center;
   align-items: center;
   gap: 1em;
+}
+#logout-btn {
+  font-family: "Syne";
+  font-size: 1rem;
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 100px;
+  height: 35px;
+}
+#logout-btn:hover {
+  background: #1d6154;
+  color: white;
+  border: white;
 }
 .modifier {
   display: flex;

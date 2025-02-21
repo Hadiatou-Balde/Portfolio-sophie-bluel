@@ -80,13 +80,37 @@ function setFilter(category) {
 }
 
 function displayAdminMode() {
-  if (sessionStorage.authToken) {
-    console.log("ok");
-    const editBanner = document.createElement("div");
-    editBanner.className = "edit";
-    editBanner.innerHTML =
-      '<p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p>';
-    document.body.prepend(editBanner);
+  const authToken = sessionStorage.getItem("authToken");
+  const editBanner = document.querySelector(".edit-banner");
+  const categoryContainer = document.querySelector(".div-container");
+  const navList = document.querySelector(".nav-list");
+  if (authToken) {
+    if (!editBanner) {
+      const banner = document.createElement("div");
+      banner.className = "edit-banner";
+      banner.innerHTML =
+        '<p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>';
+      document.body.prepend(banner);
+    }
+    if (categoryContainer) categoryContainer.style.display = "none";
+    document.querySelector("#login-btn")?.classList.add("hidden");
+
+    if (navList && !document.querySelector("#login-btn")) {
+      const logoutLi = document.createElement("li");
+      const logoutBtn = document.createElement("button");
+      logoutBtn.id = "logout-btn";
+      logoutBtn.textContent = "logout";
+      logoutBtn.addEventListener("click", () => {
+        sessionStorage.removeItem("authToken");
+        window.location.reload();
+      });
+      logoutLi.appendChild(logoutBtn);
+      navList.appendChild(logoutLi);
+    }
+  } else {
+    // if (categoryContainer) categoryContainer.style.display = "block";
+    document.querySelector("#login-btn")?.classList.remove("hidden");
+    document.querySelector("#logout-btn")?.remove();
   }
 }
 
